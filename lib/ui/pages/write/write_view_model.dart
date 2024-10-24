@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter_blog_app/data/model/post.dart';
 import 'package:flutter_blog_app/data/repository/post_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final writeViewModel = StateNotifierProvider.autoDispose<WriteViewModel, WritePageState>(
-  (ref) => WriteViewModel(const WritePageState(false)),
+final writeViewModel = StateNotifierProvider.family
+    .autoDispose<WriteViewModel, WritePageState, Post?>(
+  (ref, post) => WriteViewModel(
+    const WritePageState(false),
+    post,
+  ),
 );
 
 class WritePageState {
@@ -13,7 +18,9 @@ class WritePageState {
 }
 
 class WriteViewModel extends StateNotifier<WritePageState> {
-  WriteViewModel(super._state);
+  WriteViewModel(super._state, this.post);
+
+  Post? post;
 
   final postRepository = const PostRepository();
 
@@ -23,6 +30,11 @@ class WriteViewModel extends StateNotifier<WritePageState> {
     required String content,
   }) async {
     if (writer.isEmpty || title.isEmpty || content.isEmpty) {
+      return false;
+    }
+    if (post?.content == content &&
+        post?.title == title &&
+        writer == post?.writer) {
       return false;
     }
     state = const WritePageState(true);
