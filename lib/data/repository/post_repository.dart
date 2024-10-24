@@ -36,4 +36,26 @@ class PostRepository {
       },
     );
   }
+
+  Future<bool> insert({
+    required String writer,
+    required String title,
+    required String content,
+  }) async {
+    try {
+      final docRef = FirebaseFirestore.instance.collection('post').doc();
+      final newPost = Post(
+        id: docRef.id,
+        writer: writer,
+        title: title,
+        content: content,
+        createdAt: DateTime.now(),
+      );
+      await docRef.set(newPost.toJson());
+      return true;
+    } catch (e) {
+      log('$e');
+      return false;
+    }
+  }
 }

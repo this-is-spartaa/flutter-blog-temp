@@ -1,13 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_app/data/model/post.dart';
+import 'package:flutter_blog_app/ui/pages/write/write_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WritePage extends StatefulWidget {
+class WritePage extends ConsumerStatefulWidget {
+  const WritePage({super.key});
+
   @override
-  State<WritePage> createState() => _WritePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _WritePageState();
 }
 
-class _WritePageState extends State<WritePage> {
+class _WritePageState extends ConsumerState<WritePage> {
   final writerController = TextEditingController();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
@@ -22,9 +24,16 @@ class _WritePageState extends State<WritePage> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(writeViewModel);
+    final vm = ref.read(writeViewModel.notifier);
+    if (state.isWriting) {
+      // TODO
+      return CircularProgressIndicator();
+    }
     return Scaffold(
       appBar: AppBar(),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('작성자'),
           TextField(controller: writerController),
@@ -34,20 +43,14 @@ class _WritePageState extends State<WritePage> {
           TextField(controller: contentController),
           ElevatedButton(
             onPressed: () async {
-              // TODO empty 체크
-              // Loader
-              // Goback
-              // ViewModel
-              final docRef =
-                  FirebaseFirestore.instance.collection('post').doc();
-              final newPost = Post(
-                id: docRef.id,
+              final result = await vm.insert(
                 writer: writerController.text,
                 title: titleController.text,
                 content: contentController.text,
-                createdAt: DateTime.now(),
               );
-              await docRef.set(newPost.toJson());
+              if (result && mounted) {
+                Navigator.pop(context);
+              }
             },
             child: Text('확인'),
           ),
