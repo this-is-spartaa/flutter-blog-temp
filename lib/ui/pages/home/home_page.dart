@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/ui/pages/home/widgets/blog_list_view.dart';
+import 'package:flutter_blog_app/ui/pages/write/write_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -19,6 +20,16 @@ class HomePage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return WritePage();
+            },
+          ));
+        },
+        child: Icon(Icons.edit),
       ),
       drawer: Drawer(),
       backgroundColor: Colors.grey[200],
