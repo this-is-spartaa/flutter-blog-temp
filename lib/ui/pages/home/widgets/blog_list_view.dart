@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/ui/pages/detail/detail_page.dart';
+import 'package:flutter_blog_app/ui/pages/home/home_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BlogListView extends StatelessWidget {
+class BlogListView extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final title = ['나의 개발 일지', '겨울 추위를 피해서', '테스트 입니다'];
-    final images = [
-      'https://i.pinimg.com/736x/4e/0d/ef/4e0def0f8238b276c4cadb8bb7b87068.jpg',
-      'https://img.freepik.com/free-photo/view-breathtaking-beach-nature-landscape_23-2151682888.jpg',
-      'https://i.pinimg.com/736x/55/03/c1/5503c12391704393361d5b39138c1c61.jpg',
-    ];
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(homeViewModel);
+
     return ListView.separated(
-      itemCount: 3,
+      itemCount: state?.length ?? 0,
       separatorBuilder: (context, index) => const SizedBox(height: 20),
       itemBuilder: (context, index) {
+        final post = state![index];
         return item(
-          title[index],
-          title[index] * 10,
-          '2024년 09월 09일',
-          images[index],
+          post.title,
+          post.content,
+          post.createdAt.toIso8601String(),
+          'https://img.freepik.com/free-photo/view-breathtaking-beach-nature-landscape_23-2151682888.jpg',
         );
       },
     );

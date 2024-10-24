@@ -1,22 +1,19 @@
-// import 'package:flutter_book_app/data/model/book.dart';
-// import 'package:flutter_book_app/data/repository/naver_book_repository.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_blog_app/data/model/post.dart';
+import 'package:flutter_blog_app/data/repository/post_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// final bookSearchVM =
-//     StateNotifierProvider.autoDispose<BookSearchVM, List<Book>?>(
-//   (ref) => BookSearchVM(null),
-// );
+final homeViewModel =
+    StateNotifierProvider.autoDispose<HomeViewModel, List<Post>?>(
+  (ref) => HomeViewModel(null)..fetchData(),
+);
 
-// class BookSearchVM extends StateNotifier<List<Book>?> {
-//   BookSearchVM(super._state);
+class HomeViewModel extends StateNotifier<List<Post>?> {
+  HomeViewModel(super._state);
 
-//   final naverBookRepo = NaverBookRepository();
+  final postRepository = const PostRepository();
 
-//   Future<void> search(String query) async {
-//     if (query.trim().isEmpty) {
-//       return;
-//     }
-//     final result = await naverBookRepo.search(query);
-//     state = result?.items ?? [];
-//   }
-// }
+  Future<void> fetchData() async {
+    state = await postRepository.getAll();
+  }
+}
