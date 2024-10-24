@@ -1,16 +1,10 @@
 # flutter_blog_app
 
-A new Flutter project.
+## Firebase 세팅
+https://firebase.google.com/docs/flutter/setup?hl=ko&platform=ios
 
-## Getting Started
+## Firestore 세팅
+https://firebase.google.com/docs/firestore/quickstart?hl=ko#dart
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## FireStore 사용법
+https://firebase.google.com/docs/firestore/manage-data/add-data?hl=ko

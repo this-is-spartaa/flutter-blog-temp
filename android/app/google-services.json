@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "981447129915",
+    "project_id": "blog-sparta",
+    "storage_bucket": "blog-sparta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981447129915:android:ae16e29154833b7e48951e",
+        "android_client_info": {
+          "package_name": "com.example.flutter_blog_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM3ALfQP1dsHQrQcTy1zxZHS5lk32fsrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
