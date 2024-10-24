@@ -90,4 +90,15 @@ class PostRepository {
       },
     );
   }
+
+  Future<bool> delete(String id) async {
+    try {
+      final docRef = FirebaseFirestore.instance.collection('post').doc(id);
+      await docRef.delete();
+      return true;
+    } catch (e) {
+      log('$e');
+      return false;
+    }
+  }
 }

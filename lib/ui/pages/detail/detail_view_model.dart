@@ -16,14 +16,23 @@ class DetailViewModel extends StateNotifier<Post?> {
 
   final postRepository = const PostRepository();
 
+  @override
+  void dispose() {
+    super.dispose();
+    streamSubscription?.cancel();
+  }
+
   StreamSubscription? streamSubscription;
 
   void listenStream() async {
-    print(postId);
     streamSubscription = postRepository.postStream(postId).listen(
       (post) {
         state = post;
       },
     );
+  }
+
+  Future<bool> delete() async {
+    return await postRepository.delete(postId);
   }
 }

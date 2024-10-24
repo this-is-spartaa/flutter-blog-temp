@@ -11,11 +11,16 @@ class DetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(detailViewModel(postId));
+    final vm = ref.read(detailViewModel(postId).notifier);
     return Scaffold(
       appBar: AppBar(
         actions: [
-          button(Icons.delete, () {
-            //
+          button(Icons.delete, () async {
+            // TODO Modal
+            final result = await vm.delete();
+            if (result) {
+              Navigator.pop(context);
+            }
           }),
           button(Icons.edit, () {
             Navigator.push(context, MaterialPageRoute(

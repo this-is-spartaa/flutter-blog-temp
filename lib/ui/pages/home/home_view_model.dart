@@ -18,8 +18,8 @@ class HomeViewModel extends StateNotifier<List<Post>?> {
 
   @override
   void dispose() {
-    streamSubscription?.cancel();
     super.dispose();
+    streamSubscription?.cancel();
   }
 
   Future<void> fetchData() async {
