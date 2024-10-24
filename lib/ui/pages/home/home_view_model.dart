@@ -24,7 +24,7 @@ class HomeViewModel extends StateNotifier<List<Post>?> {
 
   Future<void> fetchData() async {
     // state = await postRepository.getAll();
-    final stream = await postRepository.postListStream();
+    final stream = postRepository.postListStream();
     streamSubscription = stream.listen(
       (newList) {
         if (mounted) {

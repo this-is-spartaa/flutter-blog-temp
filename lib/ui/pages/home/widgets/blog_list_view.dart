@@ -28,7 +28,7 @@ class BlogListView extends ConsumerWidget {
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return DetailPage(post);
+              return DetailPage(post.id);
             },
           ));
         },

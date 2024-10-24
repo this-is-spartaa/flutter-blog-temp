@@ -22,7 +22,7 @@ class PostRepository {
     }
   }
 
-  Future<Stream<List<Post>>> postListStream() async {
+  Stream<List<Post>> postListStream() {
     final collectionRef = FirebaseFirestore.instance
         .collection('post')
         .orderBy('createdAt', descending: true);
@@ -57,5 +57,37 @@ class PostRepository {
       log('$e');
       return false;
     }
+  }
+
+  Future<bool> update({
+    required String id,
+    required String writer,
+    required String title,
+    required String content,
+  }) async {
+    try {
+      final docRef = FirebaseFirestore.instance.collection('post').doc(id);
+      await docRef.update({
+        'writer': writer,
+        'title': title,
+        'content': content,
+      });
+      return true;
+    } catch (e) {
+      log('$e');
+      return false;
+    }
+  }
+
+  Stream<Post?> postStream(String id) {
+    final snapshot = FirebaseFirestore.instance.collection('post').doc(id);
+    return snapshot.snapshots().map(
+      (e) {
+        if (e.data() == null) {
+          return null;
+        }
+        return Post.fromJson(e.data()!);
+      },
+    );
   }
 }

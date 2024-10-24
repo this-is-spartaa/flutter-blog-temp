@@ -38,13 +38,22 @@ class WriteViewModel extends StateNotifier<WritePageState> {
       return false;
     }
     state = const WritePageState(true);
-    final newPost = await postRepository.insert(
-      writer: writer,
-      title: title,
-      content: content,
-    );
+
+    final result = post == null
+        ? await postRepository.insert(
+            writer: writer,
+            title: title,
+            content: content,
+          )
+        : await postRepository.update(
+            id: post!.id,
+            writer: writer,
+            title: title,
+            content: content,
+          );
+
     await Future.delayed(Duration(seconds: 1));
     state = const WritePageState(false);
-    return newPost;
+    return result;
   }
 }

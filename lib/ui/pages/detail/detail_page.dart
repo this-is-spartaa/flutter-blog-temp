@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/data/model/post.dart';
+import 'package:flutter_blog_app/ui/pages/detail/detail_view_model.dart';
+import 'package:flutter_blog_app/ui/pages/write/write_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DetailPage extends StatelessWidget {
-  DetailPage(this.post);
+class DetailPage extends ConsumerWidget {
+  DetailPage(this.postId);
 
-  Post post;
+  String postId;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(detailViewModel(postId));
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          button(Icons.delete, () {
+            //
+          }),
+          button(Icons.edit, () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return WritePage(post: state);
+              },
+            ));
+          }),
+        ],
+      ),
       body: ListView(
         padding: EdgeInsets.only(bottom: 300),
         children: [
@@ -21,7 +38,7 @@ class DetailPage extends StatelessWidget {
               children: [
                 SizedBox(height: 20),
                 Text(
-                  post.title,
+                  state?.title ?? '',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -29,13 +46,13 @@ class DetailPage extends StatelessWidget {
                 ),
                 SizedBox(height: 14),
                 Text(
-                  post.writer,
+                  state?.writer ?? '',
                   style: TextStyle(
                     fontSize: 16,
                   ),
                 ),
                 Text(
-                  post.createdAt.toIso8601String(),
+                  state?.createdAt.toIso8601String() ?? '',
                   style: TextStyle(
                     fontWeight: FontWeight.w200,
                     fontSize: 14,
@@ -43,7 +60,7 @@ class DetailPage extends StatelessWidget {
                 ),
                 SizedBox(height: 14),
                 Text(
-                  post.content,
+                  state?.content ?? '',
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -52,6 +69,18 @@ class DetailPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  GestureDetector button(IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        color: Colors.transparent, // for touch area
+        width: 50,
+        height: 50,
+        child: Icon(icon),
       ),
     );
   }

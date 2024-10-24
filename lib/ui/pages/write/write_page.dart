@@ -13,9 +13,11 @@ class WritePage extends ConsumerStatefulWidget {
 }
 
 class _WritePageState extends ConsumerState<WritePage> {
-  final writerController = TextEditingController();
-  final titleController = TextEditingController();
-  final contentController = TextEditingController();
+  late final writerController =
+      TextEditingController(text: widget.post?.writer);
+  late final titleController = TextEditingController(text: widget.post?.title);
+  late final contentController =
+      TextEditingController(text: widget.post?.content);
 
   @override
   void dispose() {
