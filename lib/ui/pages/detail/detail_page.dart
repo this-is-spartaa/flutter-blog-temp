@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_app/data/model/post.dart';
 import 'package:flutter_blog_app/ui/pages/detail/detail_view_model.dart';
 import 'package:flutter_blog_app/ui/pages/write/write_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

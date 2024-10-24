@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/data/model/post.dart';
 import 'package:flutter_blog_app/ui/pages/write/write_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class WritePage extends ConsumerStatefulWidget {
   const WritePage({super.key, required this.post});
@@ -58,8 +59,10 @@ class _WritePageState extends ConsumerState<WritePage> {
                   return;
                 }
                 if (state.imageUrl == null) {
+                  Fluttertoast.showToast(msg: '사진을 업로드 해주세요');
                   return;
                 }
+
                 final result = await vm.insert(
                   writer: writerController.text,
                   title: titleController.text,
