@@ -53,15 +53,10 @@ class WriteViewModel extends StateNotifier<WritePageState> {
     required String title,
     required String content,
   }) async {
-    if (writer.isEmpty ||
-        title.isEmpty ||
-        content.isEmpty ||
-        state.imageUrl == null) {
-      return false;
-    }
     if (post?.content == content &&
         post?.title == title &&
-        writer == post?.writer && post?.imgUrl == state.imageUrl) {
+        writer == post?.writer &&
+        post?.imgUrl == state.imageUrl) {
       return false;
     }
     state = WritePageState(true, state.imageUrl);

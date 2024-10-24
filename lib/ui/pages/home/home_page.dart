@@ -7,13 +7,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'BLOG',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text('BLOG'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
