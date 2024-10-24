@@ -54,10 +54,10 @@ class _WritePageState extends ConsumerState<WritePage> {
           actions: [
             GestureDetector(
               onTap: () async {
-                if (state.imageUrl == null) {
+                if (!formKey.currentState!.validate()) {
                   return;
                 }
-                if (!formKey.currentState!.validate()) {
+                if (state.imageUrl == null) {
                   return;
                 }
                 final result = await vm.insert(
@@ -91,10 +91,10 @@ class _WritePageState extends ConsumerState<WritePage> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(
               children: [
-                label('작성자'),
                 TextFormField(
                   controller: writerController,
                   textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(hintText: '작성자'),
                   validator: (value) {
                     if (value?.trim().isEmpty ?? true) {
                       return '작성자를 입력해 주세요';
@@ -102,10 +102,10 @@ class _WritePageState extends ConsumerState<WritePage> {
                     return null;
                   },
                 ),
-                label('제목'),
                 TextFormField(
                   controller: titleController,
                   textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(hintText: '제목'),
                   validator: (value) {
                     if (value?.trim().isEmpty ?? true) {
                       return '제목을 입력해 주세요';
@@ -113,26 +113,21 @@ class _WritePageState extends ConsumerState<WritePage> {
                     return null;
                   },
                 ),
-                label('내용'),
                 SizedBox(
                   height: 200,
                   child: TextFormField(
                     controller: contentController,
                     maxLines: null,
                     expands: true,
-                    textAlign: TextAlign.start,
                     textInputAction: TextInputAction.newline,
                     keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(hintText: '내용'),
                     validator: (value) {
                       if (value?.trim().isEmpty ?? true) {
                         return '내용을 입력해 주세요';
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      contentPadding: EdgeInsets.all(20),
-                    ),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -158,20 +153,6 @@ class _WritePageState extends ConsumerState<WritePage> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget label(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16, bottom: 8),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.grey,
         ),
       ),
     );
