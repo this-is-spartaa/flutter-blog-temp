@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/data/model/post.dart';
 import 'package:flutter_blog_app/ui/pages/write/write_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 class WritePage extends ConsumerStatefulWidget {
   const WritePage({super.key, required this.post});
@@ -41,29 +42,40 @@ class _WritePageState extends ConsumerState<WritePage> {
     }
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('작성자'),
-          TextField(controller: writerController),
-          Text('제목'),
-          TextField(controller: titleController),
-          Text('내용'),
-          TextField(controller: contentController),
-          ElevatedButton(
-            onPressed: () async {
-              final result = await vm.insert(
-                writer: writerController.text,
-                title: titleController.text,
-                content: contentController.text,
-              );
-              if (result && mounted) {
-                Navigator.pop(context);
-              }
-            },
-            child: Text('확인'),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('작성자'),
+            TextField(controller: writerController),
+            Text('제목'),
+            TextField(controller: titleController),
+            Text('내용'),
+            TextField(controller: contentController),
+            ElevatedButton(
+              onPressed: () async {
+                final xFile =
+                    await ImagePicker().pickImage(source: ImageSource.gallery);
+                print(xFile?.path);
+              },
+              child: Text('사진'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final result = await vm.insert(
+                  writer: writerController.text,
+                  title: titleController.text,
+                  content: contentController.text,
+                );
+                if (result && mounted) {
+                  Navigator.pop(context);
+                }
+              },
+              child: Text('확인'),
+            ),
+          ],
+        ),
       ),
     );
   }

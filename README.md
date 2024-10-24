@@ -9,6 +9,9 @@ https://firebase.google.com/docs/firestore/quickstart?hl=ko#dart
 ## FireStore 사용법
 https://firebase.google.com/docs/firestore/manage-data/add-data?hl=ko
 
+## Storage
+https://firebase.google.com/docs/storage/flutter/start?hl=ko
+
 
 ## 로드맵
 - 뼈대 (viewModel 포함, Riverpod)
