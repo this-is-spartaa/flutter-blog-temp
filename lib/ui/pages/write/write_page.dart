@@ -56,20 +56,22 @@ class _WritePageState extends ConsumerState<WritePage> {
             TextField(controller: titleController),
             Text('내용'),
             TextField(controller: contentController),
-            ElevatedButton(
-              onPressed: () async {
-                final xFile =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (xFile != null) {
-                  final storageRef = FirebaseStorage.instance.ref();
-                  final imageRef = storageRef.child(
-                      '${DateTime.now().microsecondsSinceEpoch}_${xFile.name}');
-                  await imageRef.putFile(File(xFile.path));
-                  final url = await imageRef.getDownloadURL();
-                  print(url);
-                }
-              },
-              child: Text('사진'),
+            Row(
+              children: [
+                Container(
+                  height: 100,
+                  child: state.imageUrl == null
+                      ? null
+                      : Image.network(state.imageUrl!),
+                ),
+                Spacer(),
+                ElevatedButton(
+                  onPressed: () {
+                    vm.pickImage();
+                  },
+                  child: Text('사진'),
+                )
+              ],
             ),
             ElevatedButton(
               onPressed: () async {

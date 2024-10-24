@@ -41,6 +41,7 @@ class PostRepository {
     required String writer,
     required String title,
     required String content,
+    required String imageUrl,
   }) async {
     try {
       final docRef = FirebaseFirestore.instance.collection('post').doc();
@@ -49,6 +50,7 @@ class PostRepository {
         writer: writer,
         title: title,
         content: content,
+        imgUrl: imageUrl,
         createdAt: DateTime.now(),
       );
       await docRef.set(newPost.toJson());
@@ -64,6 +66,7 @@ class PostRepository {
     required String writer,
     required String title,
     required String content,
+    required String imageUrl,
   }) async {
     try {
       final docRef = FirebaseFirestore.instance.collection('post').doc(id);
@@ -71,6 +74,7 @@ class PostRepository {
         'writer': writer,
         'title': title,
         'content': content,
+        'imageUrl': imageUrl,
       });
       return true;
     } catch (e) {

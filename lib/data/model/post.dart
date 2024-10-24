@@ -4,6 +4,7 @@ class Post {
     required this.writer,
     required this.title,
     required this.content,
+    required this.imgUrl,
     required this.createdAt,
   });
 
@@ -11,6 +12,7 @@ class Post {
   final String writer;
   final String title;
   final String content;
+  final String imgUrl;
   final DateTime createdAt;
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class Post {
       writer: json['writer'],
       title: json['title'],
       content: json['content'],
+      imgUrl: json['imgUrl'],
       createdAt: DateTime.parse(json['createdAt']),
     );
   }
@@ -28,6 +31,7 @@ class Post {
         'writer': writer,
         'title': title,
         'content': content,
+        'imgUrl': imgUrl,
         'createdAt': createdAt.toIso8601String(),
       };
 }
