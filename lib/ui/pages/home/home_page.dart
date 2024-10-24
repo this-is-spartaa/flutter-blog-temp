@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/ui/pages/home/widgets/blog_list_view.dart';
 import 'package:flutter_blog_app/ui/pages/write/write_page.dart';
@@ -5,6 +6,9 @@ import 'package:flutter_blog_app/ui/pages/write/write_page.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore.instance.collection('post').get().then((value) {
+      print(value.docs[0].data());
+    },);
     final title = ['나의 개발 일지', '겨울 추위를 피해서', '테스트 입니다'];
     final images = [
       'https://i.pinimg.com/736x/4e/0d/ef/4e0def0f8238b276c4cadb8bb7b87068.jpg',

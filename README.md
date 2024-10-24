@@ -11,10 +11,10 @@ https://firebase.google.com/docs/firestore/manage-data/add-data?hl=ko
 
 
 ## 로드맵
-- 뼈대 (viewModel 포함)
+- 뼈대 (viewModel 포함, Riverpod)
 - 그림
 - Firebase 세팅
-- 그림없이 Insert
-- 그림 추가
+- 그림없이 Insert (모델링 시 image제거)
 - Read, Update, Delete
+- 그림 추가
 - 인증 추가

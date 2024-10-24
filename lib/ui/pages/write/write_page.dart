@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/data/model/post.dart';
 
 class WritePage extends StatefulWidget {
   @override
@@ -39,13 +40,14 @@ class _WritePageState extends State<WritePage> {
               // ViewModel
               final docRef =
                   FirebaseFirestore.instance.collection('post').doc();
-              docRef.set({
-                'id': docRef.id,
-                'writer': writerController.text,
-                'title': titleController.text,
-                'content': contentController.text,
-                'createdAt': DateTime.now().toIso8601String(),
-              });
+              final newPost = Post(
+                id: docRef.id,
+                writer: writerController.text,
+                title: titleController.text,
+                content: contentController.text,
+                createdAt: DateTime.now(),
+              );
+              await docRef.set(newPost.toJson());
             },
             child: Text('확인'),
           ),
