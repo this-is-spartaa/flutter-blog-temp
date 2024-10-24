@@ -32,16 +32,19 @@ class _WritePageState extends State<WritePage> {
           Text('내용'),
           TextField(controller: contentController),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               // TODO empty 체크
               // Loader
               // Goback
               // ViewModel
-              FirebaseFirestore.instance.collection('post').add({
+              final docRef =
+                  FirebaseFirestore.instance.collection('post').doc();
+              docRef.set({
+                'id': docRef.id,
                 'writer': writerController.text,
                 'title': titleController.text,
                 'content': contentController.text,
-                'createdAt': DateTime.now(),
+                'createdAt': DateTime.now().toIso8601String(),
               });
             },
             child: Text('확인'),
