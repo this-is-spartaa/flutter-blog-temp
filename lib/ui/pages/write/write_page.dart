@@ -1,11 +1,7 @@
-import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/data/model/post.dart';
 import 'package:flutter_blog_app/ui/pages/write/write_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
 class WritePage extends ConsumerStatefulWidget {
   const WritePage({super.key, required this.post});

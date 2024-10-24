@@ -74,7 +74,7 @@ class PostRepository {
         'writer': writer,
         'title': title,
         'content': content,
-        'imageUrl': imageUrl,
+        'imgUrl': imageUrl,
       });
       return true;
     } catch (e) {

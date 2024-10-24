@@ -61,7 +61,7 @@ class WriteViewModel extends StateNotifier<WritePageState> {
     }
     if (post?.content == content &&
         post?.title == title &&
-        writer == post?.writer) {
+        writer == post?.writer && post?.imgUrl == state.imageUrl) {
       return false;
     }
     state = WritePageState(true, state.imageUrl);

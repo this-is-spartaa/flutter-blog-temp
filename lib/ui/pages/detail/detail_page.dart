@@ -34,8 +34,7 @@ class DetailPage extends ConsumerWidget {
       body: ListView(
         padding: EdgeInsets.only(bottom: 300),
         children: [
-          Image.network(
-              'https://i.pinimg.com/736x/4e/0d/ef/4e0def0f8238b276c4cadb8bb7b87068.jpg'),
+          if (state?.imgUrl != null) Image.network(state!.imgUrl),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(

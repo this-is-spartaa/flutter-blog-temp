@@ -14,10 +14,7 @@ class BlogListView extends ConsumerWidget {
       separatorBuilder: (context, index) => const SizedBox(height: 20),
       itemBuilder: (context, index) {
         final post = state![index];
-        return item(
-          post,
-          'https://img.freepik.com/free-photo/view-breathtaking-beach-nature-landscape_23-2151682888.jpg',
-        );
+        return item(post, post.imgUrl);
       },
     );
   }
