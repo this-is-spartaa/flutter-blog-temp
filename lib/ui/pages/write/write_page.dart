@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/data/model/post.dart';
 import 'package:flutter_blog_app/ui/pages/write/write_view_model.dart';
@@ -57,7 +60,14 @@ class _WritePageState extends ConsumerState<WritePage> {
               onPressed: () async {
                 final xFile =
                     await ImagePicker().pickImage(source: ImageSource.gallery);
-                print(xFile?.path);
+                if (xFile != null) {
+                  final storageRef = FirebaseStorage.instance.ref();
+                  final imageRef = storageRef.child(
+                      '${DateTime.now().microsecondsSinceEpoch}_${xFile.name}');
+                  await imageRef.putFile(File(xFile.path));
+                  final url = await imageRef.getDownloadURL();
+                  print(url);
+                }
               },
               child: Text('사진'),
             ),
