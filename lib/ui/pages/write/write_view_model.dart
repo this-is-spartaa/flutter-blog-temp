@@ -32,8 +32,28 @@ class WriteViewModel extends StateNotifier<WritePageState> {
 
   final postRepository = const PostRepository();
 
-  Future<void> pickImage() async {
-    final xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+  String? validateWriter(String? v) {
+    if (v?.trim().isEmpty ?? true) {
+      return '작성자를 입력해 주세요';
+    }
+    return null;
+  }
+
+  String? validateTitle(String? v) {
+    if (v?.trim().isEmpty ?? true) {
+      return '제목을 입력해 주세요';
+    }
+    return null;
+  }
+
+  String? validateContent(String? v) {
+    if (v?.trim().isEmpty ?? true) {
+      return '컨텐츠를 입력해 주세요';
+    }
+    return null;
+  }
+
+  Future<void> uploadImage(XFile? xFile) async {
     if (xFile != null) {
       try {
         final storageRef = FirebaseStorage.instance.ref();

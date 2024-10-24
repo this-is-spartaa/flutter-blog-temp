@@ -3,6 +3,7 @@ import 'package:flutter_blog_app/data/model/post.dart';
 import 'package:flutter_blog_app/ui/pages/write/write_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 
 class WritePage extends ConsumerStatefulWidget {
   const WritePage({super.key, required this.post});
@@ -98,23 +99,13 @@ class _WritePageState extends ConsumerState<WritePage> {
                   controller: writerController,
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(hintText: '작성자'),
-                  validator: (value) {
-                    if (value?.trim().isEmpty ?? true) {
-                      return '작성자를 입력해 주세요';
-                    }
-                    return null;
-                  },
+                  validator: vm.validateWriter,
                 ),
                 TextFormField(
                   controller: titleController,
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(hintText: '제목'),
-                  validator: (value) {
-                    if (value?.trim().isEmpty ?? true) {
-                      return '제목을 입력해 주세요';
-                    }
-                    return null;
-                  },
+                  validator: vm.validateTitle,
                 ),
                 SizedBox(
                   height: 200,
@@ -125,20 +116,18 @@ class _WritePageState extends ConsumerState<WritePage> {
                     textInputAction: TextInputAction.newline,
                     keyboardType: TextInputType.multiline,
                     decoration: InputDecoration(hintText: '내용'),
-                    validator: (value) {
-                      if (value?.trim().isEmpty ?? true) {
-                        return '내용을 입력해 주세요';
-                      }
-                      return null;
-                    },
+                    validator: vm.validateContent,
                   ),
                 ),
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                    onTap: () {
-                      vm.pickImage();
+                    onTap: () async {
+                      vm.uploadImage(
+                        await ImagePicker()
+                            .pickImage(source: ImageSource.gallery),
+                      );
                     },
                     child: state.imageUrl == null
                         ? Container(
