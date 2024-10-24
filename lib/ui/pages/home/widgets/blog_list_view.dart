@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/data/model/post.dart';
 import 'package:flutter_blog_app/ui/pages/detail/detail_page.dart';
 import 'package:flutter_blog_app/ui/pages/home/home_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,27 +15,20 @@ class BlogListView extends ConsumerWidget {
       itemBuilder: (context, index) {
         final post = state![index];
         return item(
-          post.title,
-          post.content,
-          post.createdAt.toIso8601String(),
+          post,
           'https://img.freepik.com/free-photo/view-breathtaking-beach-nature-landscape_23-2151682888.jpg',
         );
       },
     );
   }
 
-  Widget item(
-    String title,
-    String content,
-    String date,
-    String imageUrl,
-  ) {
+  Widget item(Post post, String imageUrl) {
     return Builder(builder: (context) {
       return GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return DetailPage();
+              return DetailPage(post);
             },
           ));
         },
@@ -75,7 +69,7 @@ class BlogListView extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      post.title,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -83,7 +77,7 @@ class BlogListView extends ConsumerWidget {
                     ),
                     Spacer(),
                     Text(
-                      content,
+                      post.content,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -94,7 +88,7 @@ class BlogListView extends ConsumerWidget {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      date,
+                      post.createdAt.toIso8601String(),
                       style: TextStyle(
                         fontWeight: FontWeight.w200,
                         color: Colors.grey,

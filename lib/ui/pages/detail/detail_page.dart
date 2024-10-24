@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/data/model/post.dart';
 
 class DetailPage extends StatelessWidget {
+  DetailPage(this.post);
+
+  Post post;
   @override
   Widget build(BuildContext context) {
-    final title = ['나의 개발 일지', '겨울 추위를 피해서', '테스트 입니다'];
-    final images = [
-      'https://i.pinimg.com/736x/4e/0d/ef/4e0def0f8238b276c4cadb8bb7b87068.jpg',
-      'https://img.freepik.com/free-photo/view-breathtaking-beach-nature-landscape_23-2151682888.jpg',
-      'https://i.pinimg.com/736x/55/03/c1/5503c12391704393361d5b39138c1c61.jpg',
-    ];
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -23,7 +21,7 @@ class DetailPage extends StatelessWidget {
               children: [
                 SizedBox(height: 20),
                 Text(
-                  'titletitletitletitletitle',
+                  post.title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -31,13 +29,13 @@ class DetailPage extends StatelessWidget {
                 ),
                 SizedBox(height: 14),
                 Text(
-                  '작성자',
+                  post.writer,
                   style: TextStyle(
                     fontSize: 16,
                   ),
                 ),
                 Text(
-                  '2024년 09월 09일',
+                  post.createdAt.toIso8601String(),
                   style: TextStyle(
                     fontWeight: FontWeight.w200,
                     fontSize: 14,
@@ -45,7 +43,7 @@ class DetailPage extends StatelessWidget {
                 ),
                 SizedBox(height: 14),
                 Text(
-                  'titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle',
+                  post.content,
                   style: TextStyle(
                     fontSize: 16,
                   ),

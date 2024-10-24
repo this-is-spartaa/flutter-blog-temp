@@ -16,6 +16,7 @@ https://firebase.google.com/docs/firestore/manage-data/add-data?hl=ko
 - Firebase 세팅
 - 그림없이 Insert (모델링 시 image제거)
 - Read, Update, Delete
+    - Read 할 때 Stream 안쓰고 한번, Write 해보고 반영 안된거 보고 리얼타임
     - Update하면서 WritePage State nullable
 - 실시간 변화 감지
 - 그림 추가
