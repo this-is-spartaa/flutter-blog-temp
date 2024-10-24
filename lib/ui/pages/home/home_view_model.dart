@@ -5,31 +5,31 @@ import 'package:flutter_blog_app/data/repository/post_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final homeViewModel =
-    StateNotifierProvider.autoDispose<HomeViewModel, List<Post>?>(
-  (ref) => HomeViewModel(null)..fetchData(),
-);
+    NotifierProvider.autoDispose<HomeViewModel, List<Post>?>(HomeViewModel.new);
 
-class HomeViewModel extends StateNotifier<List<Post>?> {
-  HomeViewModel(super._state);
-
-  final postRepository = const PostRepository();
-
-  StreamSubscription? streamSubscription;
+class HomeViewModel extends AutoDisposeNotifier<List<Post>?> {
+  HomeViewModel();
 
   @override
-  void dispose() {
-    super.dispose();
-    streamSubscription?.cancel();
+  List<Post>? build() {
+    fetchData();
+    return null;
   }
+
+  final postRepository = const PostRepository();
 
   Future<void> fetchData() async {
     // state = await postRepository.getAll();
     final stream = postRepository.postListStream();
-    streamSubscription = stream.listen(
+    final streamSubscription = stream.listen(
       (newList) {
-        if (mounted) {
-          state = newList;
-        }
+        state = newList;
+      },
+    );
+
+    ref.onDispose(
+      () {
+        streamSubscription.cancel();
       },
     );
   }

@@ -8,13 +8,8 @@ import 'package:flutter_blog_app/data/repository/post_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-final writeViewModel = StateNotifierProvider.family
-    .autoDispose<WriteViewModel, WritePageState, Post?>(
-  (ref, post) => WriteViewModel(
-    WritePageState(false, post?.imgUrl),
-    post,
-  ),
-);
+final writeViewModel = NotifierProvider.family
+    .autoDispose<WriteViewModel, WritePageState, Post?>(WriteViewModel.new);
 
 class WritePageState {
   const WritePageState(
@@ -25,12 +20,13 @@ class WritePageState {
   final String? imageUrl;
 }
 
-class WriteViewModel extends StateNotifier<WritePageState> {
-  WriteViewModel(super._state, this.post);
-
-  Post? post;
-
+class WriteViewModel extends AutoDisposeFamilyNotifier<WritePageState, Post?> {
   final postRepository = const PostRepository();
+
+  @override
+  WritePageState build(Post? arg) {
+    return WritePageState(false, arg?.imgUrl);
+  }
 
   String? validateWriter(String? v) {
     if (v?.trim().isEmpty ?? true) {
@@ -73,22 +69,22 @@ class WriteViewModel extends StateNotifier<WritePageState> {
     required String title,
     required String content,
   }) async {
-    if (post?.content == content &&
-        post?.title == title &&
-        writer == post?.writer &&
-        post?.imgUrl == state.imageUrl) {
+    if (arg?.content == content &&
+        arg?.title == title &&
+        writer == arg?.writer &&
+        arg?.imgUrl == state.imageUrl) {
       return false;
     }
     state = WritePageState(true, state.imageUrl);
 
-    final result = post == null
+    final result = arg == null
         ? await postRepository.insert(
             writer: writer,
             title: title,
             content: content,
             imageUrl: state.imageUrl!)
         : await postRepository.update(
-            id: post!.id,
+            id: arg!.id,
             writer: writer,
             title: title,
             content: content,
