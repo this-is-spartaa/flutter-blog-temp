@@ -32,8 +32,12 @@ class _WritePageState extends ConsumerState<WritePage> {
     final state = ref.watch(writeViewModel(widget.post));
     final vm = ref.read(writeViewModel(widget.post).notifier);
     if (state.isWriting) {
-      // TODO
-      return CircularProgressIndicator();
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
     return Scaffold(
       appBar: AppBar(),
